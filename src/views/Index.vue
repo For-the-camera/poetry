@@ -79,31 +79,12 @@ export default {
         <component v-bind:is="pptRender[2]"></component>
       </keep-alive>
     </div>
-    <div class="ctrl">
-      <el-button
-        type="primary"
-        @click="
-          () => {
-            this.$refs.navBarRef.back();
-          }
-        "
-        >上一页</el-button
-      >
-      <el-button
-        type="primary"
-        @click="
-          () => {
-            this.$refs.navBarRef.go();
-          }
-        "
-        >下一页</el-button
-      >
-    </div>
   </div>
 </template>
 <style lang="scss" scoped>
-$ppt-border: 5px;
 $ppt-padding: 5px;
+@import "../assets/theme";
+@import "../assets/size.scss";
 .container {
   height: 100%;
   display: flex;
@@ -116,14 +97,14 @@ $ppt-padding: 5px;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
     .left {
-      border-top: $ppt-border solid black;
-      border-bottom: $ppt-border solid black;
-      border-right: $ppt-border solid black;
+      border: $ppt-border solid $borderColor;
+
       padding: $ppt-padding;
     }
     .right {
-      border-top: $ppt-border solid black;
-      border-bottom: $ppt-border solid black;
+      border-top: $ppt-border solid $borderColor;
+      border-bottom: $ppt-border solid $borderColor;
+      border-right: $ppt-border solid $borderColor;
       padding: $ppt-padding;
     }
   }

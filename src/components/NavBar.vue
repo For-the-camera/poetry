@@ -56,102 +56,101 @@ export default {
 };
 </script>
 <template>
-  <nav class="ppt-step" style="border-bottom: 1px solid #f2f2f2">
-    <div
-      class="item"
-      style="padding-left: 0"
-      v-for="(item, index) in renderList"
-      :key="item.index"
-    >
-      <div :class="{ step: true, is_process: item.state == 'process' }">
-        <div class="step-index" v-if="item.state == 'process'">
-          {{ item.index }}
-        </div>
-        <div class="step-index-wait" v-if="item.state == 'wait'">
-          {{ item.index }}
-        </div>
-        <div class="step-icon-finsih" v-if="item.state == 'finish'">
-          <i class="el-icon-check"></i>
-        </div>
+  <div class="navbar_container">
+    <nav class="ppt-step">
+      <div
+        :class="{
+          item: true,
+          active: item.state == 'process',
+          'border-right': index == renderList.length - 1,
+          first: index == 0,
+          other: index != 0,
+        }"
+        style="padding-left: 0"
+        v-for="(item, index) in renderList"
+        :key="item.index"
+      >
         <div
           :class="{
-            'step-title': true,
-            is_finish_text: item.state === 'finish',
-            is_wait_text: item.state === 'wait',
+            step: true,
+            is_process: item.state == 'process',
           }"
         >
-          {{ item.title }}
+          <div
+            :class="{
+              'step-title': true,
+              is_finish_text: item.state === 'finish',
+              is_wait_text: item.state === 'wait',
+            }"
+          >
+            {{ item.title }}
+          </div>
         </div>
       </div>
-      <div class="arrow" v-if="renderList.length !== item.index">
-        <i class="el-icon-arrow-right"></i>
-      </div>
+    </nav>
+    <div class="ctrl_button">
+      <div class="button" @click="back()">&lt; 上一页</div>
+      <div class="button border-right" @click="go()">下一页&gt;</div>
     </div>
-  </nav>
+  </div>
 </template>
 <style lang="scss" scoped>
-$theme-color: #1890ff;
-$indicator-color: #1890ff;
-$finish-text-color: #8b8a87;
-$wait-color: #bbb7ad;
-.ppt-step {
-  width: 100%;
+$cellSize: 30px;
+$borderSize: 2px;
+$activeColor: white;
+$firstColor: #00b050;
+$otherColor: #92d050;
+
+.navbar_container {
   display: flex;
-  align-items: center;
-  padding-left: 20px;
-  .item {
+  justify-content: space-between;
+  .ppt-step {
+    width: 50%;
     display: flex;
-    align-items: center;
-    .step {
+    .item {
+      width: $cellSize;
       display: flex;
+      justify-content: center;
       align-items: center;
-      padding: 20px 20px 13px 20px;
-      .step-index {
-        width: 23px;
-        height: 23px;
-        background-color: $theme-color;
-        color: white;
-        border-radius: 50%;
-        margin-right: 9px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      border-top: $borderSize solid black;
+      border-left: $borderSize solid black;
+      border-bottom: $borderSize solid black;
+      .step {
+        text-align: center;
       }
-      .step-icon-finsih {
-        width: 23px;
-        height: 23px;
-        background-color: none;
-        color: $theme-color;
-        border: 1px solid $theme-color;
-        border-color: $theme-color;
-        border-radius: 50%;
-        margin-right: 9px;
+      .is_process {
         display: flex;
-        justify-content: center;
         align-items: center;
-      }
-      .step-index-wait {
-        width: 23px;
-        height: 23px;
-        background-color: none;
-        color: $wait-color;
-        border: 1px solid $wait-color;
-        border-radius: 50%;
-        margin-right: 9px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        .step-title {
+          font-size: 15px;
+        }
       }
     }
   }
-  .is_process {
-    border-bottom: 2px solid $indicator-color;
+  .ctrl_button {
+    display: flex;
+    .button {
+      padding: 12px;
+      background: $otherColor;
+      border-top: $borderSize solid black;
+      border-left: $borderSize solid black;
+      border-bottom: $borderSize solid black;
+      cursor: pointer;
+    }
   }
-  .is_finish_text {
-    color: $finish-text-color;
-  }
-  .is_wait_text {
-    color: $wait-color;
-  }
+}
+
+.active {
+  background-color: $activeColor !important;
+  color: black;
+}
+.border-right {
+  border-right: $borderSize solid black;
+}
+.first {
+  background-color: $firstColor;
+}
+.other {
+  background-color: $otherColor;
 }
 </style>
