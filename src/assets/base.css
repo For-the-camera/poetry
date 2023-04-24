@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* 画布大小 */
+#app {
+  width: 1200px;
+  height: 800px;
+}
