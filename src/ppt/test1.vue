@@ -1,5 +1,9 @@
 <script>
+import PageTitle from "../components/PageTitle.vue";
 export default {
+  components: {
+    PageTitle,
+  },
   name: "Test1",
   props: {},
   data() {
@@ -9,6 +13,6 @@ export default {
 };
 </script>
 <template>
-  <div>This Test1</div>
+  <div><PageTitle>1</PageTitle></div>
 </template>
 <style scoped></style>
