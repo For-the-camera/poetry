@@ -105,7 +105,7 @@ $ppt-padding: 5px;
       border-top: $ppt-border solid $borderColor;
       border-bottom: $ppt-border solid $borderColor;
       border-right: $ppt-border solid $borderColor;
-      padding: $ppt-padding;
+      // padding: $ppt-padding;
     }
   }
   .single-page {

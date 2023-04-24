@@ -9,6 +9,6 @@ export default [
     index: 2,
     title: "1",
     left: import("../src/ppt/test2.vue"),
-    right: import("../src/ppt/test1.vue"),
+    right: import("../src/components/Material.vue"),
   },
 ];
