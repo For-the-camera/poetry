@@ -88,6 +88,8 @@
 
 <script>
 import { Sketch } from "vue-color";
+import { useProcessStore } from "../stores/process";
+import { usePPTStore } from "../stores/ppt";
 
 export default {
   name: "draw",
@@ -96,6 +98,8 @@ export default {
   },
   data() {
     return {
+      processStore: useProcessStore(),
+      pptStore: usePPTStore(),
       canvasSize: {
         width: 540,
         height: 450,
@@ -242,10 +246,11 @@ export default {
     },
     tabfun(fun) {
       if (fun === "clear") {
-        console.log(123);
         this.clearContext("1");
       } else if (fun === "save") {
         this.downloadImage();
+      } else if (fun === "cancel") {
+        this.cancel();
       }
     },
     draw_graph(graphType) {
@@ -308,6 +313,7 @@ export default {
           this.context.lineTo(x + 2, y + 2);
           this.context.stroke();
         }
+        this.postData();
       };
       // 鼠标移动
       let mousemove = (e) => {
@@ -583,6 +589,11 @@ export default {
         }
       };
     },
+    postData() {
+      this.processStore.page6.answer.picture = this.cancelList;
+      this.$postData();
+    },
+    
   },
   mounted() {
     this.initCanvas();
@@ -596,6 +607,35 @@ export default {
         height: 500,
       };
     });
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 7) {
+
+          const image = new Image();
+          let url =
+            this.processStore.page6.answer.picture[
+              this.processStore.page6.answer.picture.length - 1
+            ];
+          image.src = url;
+
+          image.onload = () => {
+            this.context.drawImage(
+              image,
+              0,
+              0,
+              image.width,
+              image.height,
+              0,
+              0,
+              this.canvasSize.width,
+              this.canvasSize.height
+            );
+          };
+        }
+      },
+      { immediate: true }
+    );
   },
 };
 </script>

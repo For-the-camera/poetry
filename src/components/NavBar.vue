@@ -20,6 +20,15 @@ export default {
     go() {
       if (this.store.nowPage.index !== this.renderList.length) {
         if (this.store.nowPage.index === 9) {
+          const index = this.store.nowPage.index - 1;
+          const now = this.renderList[index];
+          now.state = "finish";
+          this.$set(this.renderList, index, now);
+          const next = this.renderList[index + 1];
+          next.state = "process";
+          this.$set(this.renderList, index + 1, next);
+          this.store.nowPage = this.renderList[index + 1];
+
           return;
         }
         const index = this.store.nowPage.index - 1;
@@ -48,11 +57,15 @@ export default {
         const later = this.renderList[index - 1];
         later.state = "process";
         this.$set(this.renderList, index - 1, later);
-        this.store.nowPage.leaveMoment = Date.now();
-        this.recordData();
+        if (index + 1 !== 10) {
+          this.store.nowPage.leaveMoment = Date.now();
+          this.recordData();
+        }
 
         this.store.nowPage = this.renderList[index - 1];
-        this.store.nowPage.enterMoment = Date.now();
+        if (index + 1 !== 10) {
+          this.store.nowPage.enterMoment = Date.now();
+        }
       }
     },
     transformData: (configList) => {
@@ -119,7 +132,7 @@ export default {
           'border-right': index == renderList.length - 1,
           first: index == 0,
           other: index != 0,
-          finish:item.state=='finish'
+          finish: item.state == 'finish',
         }"
         style="padding-left: 0"
         v-for="(item, index) in renderList"
@@ -144,8 +157,20 @@ export default {
       </div>
     </nav>
     <div class="ctrl_button">
-      <div class="button" @click="back()" v-show="this.store.nowPage.index !== 1">&lt; 上一页</div>
-      <div class="button border-right" @click="go()">下一页&gt;</div>
+      <div
+        class="button"
+        @click="back()"
+        v-show="this.store.nowPage.index !== 1"
+      >
+        &lt; 上一页
+      </div>
+      <div
+        class="button border-right"
+        @click="go()"
+        v-show="this.store.nowPage.index !== 10"
+      >
+        下一页&gt;
+      </div>
     </div>
   </div>
 </template>
@@ -200,8 +225,8 @@ $otherColor: #92d050;
   background-color: $activeColor !important;
   color: black;
 }
-.finish{
-  background-color: $firstColor!important;
+.finish {
+  background-color: $firstColor !important;
 }
 .border-right {
   border-right: $borderSize solid black;

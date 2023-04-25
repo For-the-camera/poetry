@@ -3,7 +3,7 @@ export default [
     index: 1,
     title: "导言",
     single: true,
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -12,7 +12,7 @@ export default [
   {
     index: 2,
     title: "1",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -22,7 +22,7 @@ export default [
   {
     index: 3,
     title: "2",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -32,7 +32,7 @@ export default [
   {
     index: 4,
     title: "3",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -42,7 +42,7 @@ export default [
   {
     index: 5,
     title: "4",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -52,7 +52,7 @@ export default [
   {
     index: 6,
     title: "5",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -62,7 +62,7 @@ export default [
   {
     index: 7,
     title: "6",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -72,7 +72,7 @@ export default [
   {
     index: 8,
     title: "7",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
@@ -82,12 +82,18 @@ export default [
   {
     index: 9,
     title: "8",
-    firstEnter:true,
+    firstEnter: true,
     enterMoment: 0,
     leaveMoment: 0,
     firstEvent: 0,
     left: import("../src/ppt/Page8.vue"),
     right: import("../src/components/Material.vue"),
   },
+  {
+    index: 10,
+    title: "9",
+    single: true,
+    page: import("../src/ppt/Page10.vue")
+  }
 
 ];
