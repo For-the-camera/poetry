@@ -119,6 +119,7 @@ export default {
           'border-right': index == renderList.length - 1,
           first: index == 0,
           other: index != 0,
+          finish:item.state=='finish'
         }"
         style="padding-left: 0"
         v-for="(item, index) in renderList"
@@ -143,7 +144,7 @@ export default {
       </div>
     </nav>
     <div class="ctrl_button">
-      <div class="button" @click="back()">&lt; 上一页</div>
+      <div class="button" @click="back()" v-show="this.store.nowPage.index !== 1">&lt; 上一页</div>
       <div class="button border-right" @click="go()">下一页&gt;</div>
     </div>
   </div>
@@ -198,6 +199,9 @@ $otherColor: #92d050;
 .active {
   background-color: $activeColor !important;
   color: black;
+}
+.finish{
+  background-color: $firstColor!important;
 }
 .border-right {
   border-right: $borderSize solid black;

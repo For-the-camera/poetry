@@ -52,6 +52,22 @@ export default {
       this.$postData();
     },
   },
+  mounted() {
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 5) {
+          const { lastResult = ["",""] } = JSON.parse(
+            JSON.stringify(this.processStore.page4.answer)
+          );
+          this.currentSelect = lastResult[1];
+          this.answer = lastResult[0];
+        }
+      },
+      {immediate:true}
+
+    );
+  },
   components: { PageTitle },
 };
 </script>

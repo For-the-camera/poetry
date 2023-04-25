@@ -72,7 +72,7 @@ export default {
       } else {
         this.processStore.page2.answer.lastResult[0] = this.currentSelect;
       }
-      this.$postData()
+      this.$postData();
     },
     pushInputData() {
       if (this.pptStore.nowPage.firstEnter) {
@@ -83,6 +83,21 @@ export default {
       }
       this.$postData();
     },
+  },
+  mounted() {
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 3) {
+          const { lastResult = ["", ""] } = JSON.parse(
+            JSON.stringify(this.processStore.page2.answer)
+          );
+          this.currentSelect = lastResult[0];
+          this.reason = lastResult[1];
+        }
+      },
+      { immediate: true }
+    );
   },
   components: { PageTitle },
 };
@@ -119,6 +134,8 @@ export default {
         :rows="6"
         v-model="reason"
         @blur="pushInputData"
+        show-word-limit
+        placeholder="请输入你的淘汰理由"
       ></el-input>
     </div>
   </div>

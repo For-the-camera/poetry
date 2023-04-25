@@ -16,13 +16,27 @@ export default {
   methods: {
     postInputData() {
       if (this.pptStore.nowPage.firstEnter) {
-        this.processStore.page7.answer.firstResult = this.idea;
-        this.processStore.page7.answer.lastResult = this.idea;
+        this.processStore.page8.answer.firstResult = this.idea;
+        this.processStore.page8.answer.lastResult = this.idea;
       } else {
-        this.processStore.page7.answer.lastResult = this.idea;
+        this.processStore.page8.answer.lastResult = this.idea;
       }
       this.$postData();
     },
+  },
+  mounted() {
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 9) {
+          const { lastResult = "" } = JSON.parse(
+            JSON.stringify(this.processStore.page8.answer)
+          );
+          this.idea = lastResult;
+        }
+      },
+      { immediate: true }
+    );
   },
   components: { PageTitle },
 };
@@ -31,7 +45,7 @@ export default {
   <div class="page-container">
     <PageTitle>9/9</PageTitle>
     <div class="stem">
-      <p>9.&emsp;请你反思一个问题：在现在这个时代，学古诗词有什么作用呢</p>
+      <p>9.&emsp;请你反思一个问题：在现代，学写诗有什么用呢？</p>
       <div class="example">
         <p>
           &emsp;&emsp;&emsp;

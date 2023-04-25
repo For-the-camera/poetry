@@ -15,7 +15,7 @@ export default {
     };
   },
   methods: {
-    postInputData(index){
+    postInputData(index) {
       const answer = index === 0 ? this.scheme : this.innovation;
       if (this.pptStore.nowPage.firstEnter) {
         this.processStore.page7.answer.firstResult[index] = answer;
@@ -24,7 +24,22 @@ export default {
         this.processStore.page7.answer.lastResult[index] = answer;
       }
       this.$postData();
-    }
+    },
+  },
+  mounted() {
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 8) {
+          const { lastResult = ["", ""] } = JSON.parse(
+            JSON.stringify(this.processStore.page7.answer)
+          );
+          this.scheme = lastResult[0];
+          this.innovation = lastResult[1];
+        }
+      },
+      { immediate: true }
+    );
   },
   components: { PageTitle },
 };

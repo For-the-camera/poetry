@@ -2,16 +2,66 @@
 import PageTitle from "../components/PageTitle.vue";
 import { useVmStore } from "../stores/vm";
 import dragula from "dragula";
+import { useProcessStore } from "../stores/process";
+import { usePPTStore } from "../stores/ppt";
 
 export default {
   name: "Page1",
   props: {},
   data() {
-    return { content1: "", content2: "==", valueList: [] };
+    return {
+      pptStore: usePPTStore(),
+      processStore: useProcessStore(),
+      vmStore: useVmStore(),
+      content1: "",
+      content2: "",
+    };
   },
-  methods: {},
+  methods: {
+    postInputData(index) {
+      const answer = index === 0 ? this.content1 : this.content2;
+      if (this.pptStore.nowPage.firstEnter) {
+        this.processStore.page1.answer.firstResult[index] = answer;
+        this.processStore.page1.answer.lastResult[index] = answer;
+      } else {
+        this.processStore.page1.answer.lastResult[index] = answer;
+      }
+      this.$postData();
+    },
+  },
   components: { PageTitle },
   mounted() {
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 2) {
+          const { lastResult = ["", "", []] } = JSON.parse(
+            JSON.stringify(this.processStore.page1.answer)
+          );
+          this.content1 = lastResult[0];
+          this.content2 = lastResult[1];
+          // useVmStore().valueList = lastResult[2];
+        }
+      },
+      { immediate: true }
+    );
+    this.$watch(
+      () => this.vmStore.valueList,
+      function () {
+        if (this.pptStore.nowPage.firstEvent === 0) {
+          this.pptStore.nowPage.firstEvent = Date.now();
+        }
+        const answer = JSON.parse(JSON.stringify(this.vmStore.valueList));
+        if (this.pptStore.nowPage.firstEnter) {
+          this.processStore.page1.answer.firstResult[2] = answer;
+          this.processStore.page1.answer.lastResult[2] = answer;
+        } else {
+          this.processStore.page1.answer.lastResult[2] = answer;
+        }
+        this.$postData();
+      },
+      { deep: true }
+    );
     const drag_panle_el = this.$refs.drag_panle;
     const drag_left_el = this.$refs.left_panle;
     const drag_right_el = this.$refs.right_panle;
@@ -129,17 +179,24 @@ export default {
       <p style="margin-top: 7px">组合标准：</p>
       <el-input
         type="textarea"
-        :rows="5"
-        placeholder="请输入内容"
+        :rows="3"
+        placeholder="请输入你的组合标准"
         v-model="content1"
+        :show-word-limit="true"
+        @focus="$checkFocus"
+        @blur="postInputData(0)"
       >
       </el-input>
       <p style="margin-top: 7px">拟一个单元标题：</p>
       <el-input
         type="textarea"
         :rows="1"
-        placeholder="请输入内容"
+        :min-length="0"
+        :max-length="100"
+        placeholder="请输入单元标题"
         v-model="content2"
+        @focus="$checkFocus"
+        @blur="postInputData(1)"
       >
       </el-input>
     </div>

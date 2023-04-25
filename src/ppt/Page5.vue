@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     postInputData(index) {
-      const answer = index === 0 ? this.scene : this.poetry[index];
+      const answer = index === 0 ? this.scene : this.poetry[index - 1];
       if (this.pptStore.nowPage.firstEnter) {
         this.processStore.page5.answer.firstResult[index] = answer;
         this.processStore.page5.answer.lastResult[index] = answer;
@@ -25,6 +25,22 @@ export default {
       }
       this.$postData();
     },
+  },
+  mounted() {
+    this.$watch(
+      () => this.pptStore.nowPage.index,
+      function (val) {
+        if (val === 6) {
+          const { lastResult = ["", "", ""] } = JSON.parse(
+            JSON.stringify(this.processStore.page5.answer)
+          );
+          this.scene = lastResult[0];
+          this.poetry[0] = lastResult[1];
+          this.poetry[1] = lastResult[2];
+        }
+      },
+      { immediate: true }
+    );
   },
   components: { PageTitle },
 };
@@ -41,7 +57,7 @@ export default {
       </p>
     </div>
     <div class="respondence">
-      <p>6.&emsp;请你尝试写一句诗。要求：言之有物，对仗工整</p>
+      <p>6.&emsp;请你尝试写一联诗。要求：言之有物，对仗工整</p>
       <div class="item">
         <span>场景：</span>
         <el-input
@@ -52,7 +68,7 @@ export default {
         />
       </div>
       <div class="item">
-        <span>诗作：</span>
+        <span>诗句：</span>
         <el-input
           style="width: 40%; margin-right: 20px"
           v-model="poetry[0]"
