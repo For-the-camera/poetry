@@ -1,13 +1,31 @@
 <script>
 import PageTitle from "../components/PageTitle.vue";
+import { usePPTStore } from "../stores/ppt";
+import { useProcessStore } from "../stores/process";
 
 export default {
   name: "Page7",
   props: {},
   data() {
-    return {};
+    return {
+      pptStore: usePPTStore(),
+      processStore: useProcessStore(),
+      scheme: "",
+      innovation: "",
+    };
   },
-  methods: {},
+  methods: {
+    postInputData(index){
+      const answer = index === 0 ? this.scheme : this.innovation;
+      if (this.pptStore.nowPage.firstEnter) {
+        this.processStore.page7.answer.firstResult[index] = answer;
+        this.processStore.page7.answer.lastResult[index] = answer;
+      } else {
+        this.processStore.page7.answer.lastResult[index] = answer;
+      }
+      this.$postData();
+    }
+  },
   components: { PageTitle },
 };
 </script>
@@ -26,9 +44,21 @@ export default {
     </div>
     <div class="respondence">
       <p>你的方案：</p>
-      <el-input type="textarea" :rows="6" />
+      <el-input
+        type="textarea"
+        :rows="6"
+        v-model="scheme"
+        @focus="checkFocus"
+        @blur="postInputData(0)"
+      />
       <p>创新点：</p>
-      <el-input type="textarea" :rows="6" />
+      <el-input
+        type="textarea"
+        :rows="6"
+        v-model="innovation"
+        @focus="checkFocus"
+        @blur="postInputData(1)"
+      />
     </div>
   </div>
 </template>
