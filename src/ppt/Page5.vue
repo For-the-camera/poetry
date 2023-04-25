@@ -1,7 +1,7 @@
 <script>
 import PageTitle from '../components/PageTitle.vue';
 export default {
-  name: "Page2",
+  name: "Page5",
   comments:{
     PageTitle
   },
