@@ -1,8 +1,9 @@
 @import "./size.scss";
 
-.stem{
-  p{
+.stem {
+  p {
     font-size: $font-content;
     line-height: $lineHeight-content;
+    margin: 10px 0;
   }
 }

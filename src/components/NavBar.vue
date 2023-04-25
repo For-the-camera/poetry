@@ -136,6 +136,7 @@ $otherColor: #92d050;
       border-left: $borderSize solid black;
       border-bottom: $borderSize solid black;
       cursor: pointer;
+      user-select: none;
     }
   }
 }
