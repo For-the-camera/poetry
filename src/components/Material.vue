@@ -1,9 +1,18 @@
 <script>
 import Tab1 from "./Tab1.vue";
+import Tab2 from "./Tab2.vue";
+import Tab3 from "./Tab3.vue";
+import Tab4 from "./Tab4.vue";
+import Tab5 from "./Tab5.vue";
+
 export default {
   name: "Material",
   components: {
     Tab1,
+    Tab2,
+    Tab3,
+    Tab4,
+    Tab5,
   },
   props: {},
   data() {
@@ -25,9 +34,21 @@ export default {
       <div class="tab_item" @click="() => (active = 4)">诗的创作</div>
     </div>
     <div class="tab_content">
-      <p class="tab_1" v-show="active == 0">
+      <div class="tab_1" v-show="active == 0">
         <Tab1></Tab1>
-      </p>
+      </div>
+      <div v-show="active == 1">
+        <Tab2></Tab2>
+      </div>
+      <div v-show="active == 2">
+        <Tab3></Tab3>
+      </div>
+      <div v-show="active == 3">
+        <Tab4></Tab4>
+      </div>
+      <div v-show="active == 4">
+        <Tab5></Tab5>
+      </div>
     </div>
   </div>
 </template>
@@ -53,8 +74,6 @@ export default {
   .tab_content {
     height: 494px;
     padding: 5px;
-    .tab_1 {
-    }
   }
 }
 </style>
