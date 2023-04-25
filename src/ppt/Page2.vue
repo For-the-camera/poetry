@@ -64,7 +64,26 @@ export default {
       reason: "",
     };
   },
-  methods: {},
+  methods: {
+    pushSelectData() {
+      if (this.pptStore.nowPage.firstEnter) {
+        this.processStore.page2.answer.firstResult[0] = this.currentSelect;
+        this.processStore.page2.answer.lastResult[0] = this.currentSelect;
+      } else {
+        this.processStore.page2.answer.lastResult[0] = this.currentSelect;
+      }
+      this.$postData()
+    },
+    pushInputData() {
+      if (this.pptStore.nowPage.firstEnter) {
+        this.processStore.page2.answer.firstResult[1] = this.reason;
+        this.processStore.page2.answer.lastResult[1] = this.reason;
+      } else {
+        this.processStore.page2.answer.lastResult[1] = this.reason;
+      }
+      this.$postData();
+    },
+  },
   components: { PageTitle },
 };
 </script>
@@ -84,9 +103,10 @@ export default {
         style="width: 100%"
         v-model="currentSelect"
         placeholder="请选择要淘汰的诗歌"
+        @focus="$checkFocus"
+        @change="pushSelectData"
       >
         <el-option
-          @blur="checkBlur"
           v-for="item in options"
           :key="item.value"
           :label="item.label"
@@ -94,7 +114,12 @@ export default {
         ></el-option>
       </el-select>
       <p>淘汰的理由</p>
-      <el-input type="textarea" :rows="6" v-model="reason"></el-input>
+      <el-input
+        type="textarea"
+        :rows="6"
+        v-model="reason"
+        @blur="pushInputData"
+      ></el-input>
     </div>
   </div>
 </template>

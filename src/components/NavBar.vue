@@ -1,5 +1,6 @@
 <script>
 import { usePPTStore } from "../stores/ppt";
+import { useProcessStore } from "../stores/process";
 
 export default {
   props: {
@@ -10,6 +11,7 @@ export default {
   },
   data() {
     return {
+      processStore: useProcessStore(),
       renderList: this.transformData(this.config),
       store: usePPTStore(),
     };
@@ -17,6 +19,9 @@ export default {
   methods: {
     go() {
       if (this.store.nowPage.index !== this.renderList.length) {
+        if (this.store.nowPage.index === 9) {
+          return;
+        }
         const index = this.store.nowPage.index - 1;
         const now = this.renderList[index];
         now.state = "finish";
@@ -24,7 +29,14 @@ export default {
         const next = this.renderList[index + 1];
         next.state = "process";
         this.$set(this.renderList, index + 1, next);
+        if (this.store.nowPage.firstEnter) {
+          this.store.nowPage.firstEnter = false;
+        }
+        this.store.nowPage.leaveMoment = Date.now();
+        this.recordData();
+
         this.store.nowPage = this.renderList[index + 1];
+        this.store.nowPage.enterMoment = Date.now();
       }
     },
     back() {
@@ -36,7 +48,11 @@ export default {
         const later = this.renderList[index - 1];
         later.state = "process";
         this.$set(this.renderList, index - 1, later);
+        this.store.nowPage.leaveMoment = Date.now();
+        this.recordData();
+
         this.store.nowPage = this.renderList[index - 1];
+        this.store.nowPage.enterMoment = Date.now();
       }
     },
     transformData: (configList) => {
@@ -48,6 +64,40 @@ export default {
         }
         return config;
       });
+    },
+    recordData() {
+      const index = this.store.nowPage.index - 1;
+      if (index !== 0) {
+        const lastResult = JSON.parse(
+          JSON.stringify(this.processStore[`page${index}`].answer.lastResult)
+        );
+        if (
+          (lastResult instanceof Array && lastResult.length !== 0) ||
+          (typeof lastResult === "string" && lastResult !== "")
+        ) {
+          this.processStore[`page${index}`].answer.process.push(lastResult);
+        }
+      }
+      const { enterMoment, leaveMoment, firstEvent } = JSON.parse(
+        JSON.stringify(this.store.nowPage)
+      );
+      const { totalTime, respondenceTime } = JSON.parse(
+        JSON.stringify(this.processStore[`page${index}`])
+      );
+      this.processStore[`page${index}`].totalTime =
+        totalTime === 0
+          ? leaveMoment - enterMoment
+          : totalTime + leaveMoment - enterMoment;
+      this.processStore[`page${index}`].respondenceTime =
+        respondenceTime === 0
+          ? firstEvent === 0
+            ? 0
+            : leaveMoment - firstEvent
+          : firstEvent === 0
+          ? respondenceTime
+          : respondenceTime + leaveMoment - firstEvent;
+      this.$postData();
+      this.store.nowPage.firstEvent = 0;
     },
   },
   mounted() {

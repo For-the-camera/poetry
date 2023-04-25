@@ -1,11 +1,17 @@
 <script>
+import { usePPTStore } from '../stores/ppt';
 export default {
   name: "Preface",
   props: {},
   data() {
-    return {};
+    return {
+      pptStore: usePPTStore(),
+    };
   },
   methods: {},
+  mounted(){
+    this.pptStore.nowPage.enterMoment = Date.now();
+  }
 };
 </script>
 <template>

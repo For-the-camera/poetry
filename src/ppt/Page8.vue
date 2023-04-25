@@ -1,15 +1,29 @@
 <script>
 import PageTitle from "../components/PageTitle.vue";
+import { usePPTStore } from "../stores/ppt";
+import { useProcessStore } from "../stores/process";
 
 export default {
   name: "Page8",
   props: {},
   data() {
     return {
-      idea:"",
+      pptStore: usePPTStore(),
+      processStore: useProcessStore(),
+      idea: "",
     };
   },
-  methods: {},
+  methods: {
+    postInputData() {
+      if (this.pptStore.nowPage.firstEnter) {
+        this.processStore.page7.answer.firstResult = this.idea;
+        this.processStore.page7.answer.lastResult = this.idea;
+      } else {
+        this.processStore.page7.answer.lastResult = this.idea;
+      }
+      this.$postData();
+    },
+  },
   components: { PageTitle },
 };
 </script>
@@ -32,7 +46,13 @@ export default {
     </div>
     <div class="respondence">
       <p>你的想法:</p>
-      <el-input type="textarea" :rows="6" v-model="idea" />
+      <el-input
+        type="textarea"
+        :rows="6"
+        v-model="idea"
+        @focus="$checFocus"
+        @blur="postInputData"
+      />
     </div>
   </div>
 </template>

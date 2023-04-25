@@ -12,16 +12,22 @@ export default {
     };
   },
   mounted() {
+    window.addEventListener('message',(e) => {
+      console.log(e);
+    })
     this.$watch(
-      () => this.processStore,
-      () => {
-        parent.postMessage({
+      () => this.pptStore.postData,
+      (val) => {
+       if (val) {
+        window.postMessage({
           data: this.processStore.$state,
           checkedAnswer: this.pptStore.checkedAnswer,
           postTime: Date.now(),
           cst: new Date(),
         });
-      }
+        this.pptStore.postData = false;
+       }
+      },
     );
   },
 };
