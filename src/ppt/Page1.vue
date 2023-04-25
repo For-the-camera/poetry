@@ -183,6 +183,7 @@ export default {
         placeholder="请输入你的组合标准"
         v-model="content1"
         :show-word-limit="true"
+        :maxlength="1000"
         @focus="$checkFocus"
         @blur="postInputData(0)"
       >
@@ -191,6 +192,7 @@ export default {
       <el-input
         type="textarea"
         :rows="1"
+        :maxlength="1000"
         :show-word-limit="true"
         placeholder="请输入单元标题"
         v-model="content2"

@@ -66,6 +66,7 @@ export default {
         @focus="$checkFocus"
         @blur="postInputData(0)"
         :show-word-limit="true"
+        :maxlength="1000"
       />
       <p>创新点：</p>
       <el-input
@@ -75,6 +76,7 @@ export default {
         @focus="$checkFocus"
         @blur="postInputData(1)"
         :show-word-limit="true"
+        :maxlength="1000"
       />
     </div>
   </div>

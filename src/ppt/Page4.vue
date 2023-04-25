@@ -85,6 +85,7 @@ export default {
         @focus="$checkFocus"
         @blur="postInputData"
         :show-word-limit="true"
+        :maxlength="1000"
       ></el-input>
     </div>
     <div class="stem" style="margin-top: 30px">

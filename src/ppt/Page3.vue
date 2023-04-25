@@ -58,6 +58,7 @@ export default {
         @blur="pushInputData"
         @focus="$checkFocus"
         :show-word-limit="true"
+        :maxlength="1000"
       ></el-input>
     </div>
   </div>

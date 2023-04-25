@@ -67,6 +67,7 @@ export default {
         @focus="$checkFocus"
         @blur="postInputData"
         :show-word-limit="true"
+        :maxlength="1000"
       />
     </div>
   </div>

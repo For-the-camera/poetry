@@ -135,6 +135,7 @@ export default {
         v-model="reason"
         @blur="pushInputData"
         :show-word-limit="true"
+        :maxlength="1000"
         placeholder="请输入你的淘汰理由"
       ></el-input>
     </div>
