@@ -21,6 +21,7 @@ export default {
         },
       ],
       currentSelect: "",
+      answer:"",
     };
   },
   methods: {},
@@ -34,7 +35,7 @@ export default {
       <p>
         4.&emsp;在你的生活中，哪一首古诗诗句经常被想起或者出现的频率最高？你从中悟出一个什么道理？它与你的生活又有什么关系？
       </p>
-      <el-input type="textarea" :rows="6"></el-input>
+      <el-input type="textarea" :rows="6" v-model="answer"></el-input>
     </div>
     <div class="stem" style="margin-top: 30px">
       <p>5.&emsp;请你选择一句你认为最好的对仗（&emsp;&emsp;）</p>

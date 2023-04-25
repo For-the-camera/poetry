@@ -5,7 +5,10 @@ export default {
   name: "Page5",
   props: {},
   data() {
-    return {};
+    return {
+      scene:"",
+      poetry:["",""]
+    };
   },
   methods: {},
   components: { PageTitle },
@@ -26,13 +29,13 @@ export default {
       <p>6.&emsp;请你尝试写一句诗。要求：言之有物，对仗工整</p>
       <div class="item">
         <span>场景：</span>
-        <el-input style="width: 87%;" />
+        <el-input style="width: 87%;" v-model="scene" />
       </div>
       <div class="item">
         <span>诗作：</span>
-        <el-input style="width: 40%;margin-right: 20px;" />
+        <el-input style="width: 40%;margin-right: 20px;" v-model="poetry[0]" />
         ,
-        <el-input style="width: 40%;margin-left: 20px;"/>
+        <el-input style="width: 40%;margin-left: 20px;" v-model="poetry[1]"/>
       </div>
     </div>
   </div>

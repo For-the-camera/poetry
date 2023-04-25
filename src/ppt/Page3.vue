@@ -4,7 +4,9 @@ export default {
   name: "Page3",
   props: {},
   data() {
-    return {};
+    return {
+      answer:""
+    };
   },
   methods: {},
   components: { PageTitle },
@@ -24,7 +26,7 @@ export default {
       </p>
     </div>
     <div style="margin-top: 20px;">
-      <el-input type="textarea" :rows="8"></el-input>
+      <el-input type="textarea" :rows="8" v-model="answer"></el-input>
     </div>
   </div>
 </template>

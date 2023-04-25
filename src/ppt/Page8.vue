@@ -5,7 +5,9 @@ export default {
   name: "Page8",
   props: {},
   data() {
-    return {};
+    return {
+      idea:"",
+    };
   },
   methods: {},
   components: { PageTitle },
@@ -30,7 +32,7 @@ export default {
     </div>
     <div class="respondence">
       <p>你的想法:</p>
-      <el-input type="textarea" :rows="6" />
+      <el-input type="textarea" :rows="6" v-model="idea" />
     </div>
   </div>
 </template>

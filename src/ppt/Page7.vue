@@ -5,7 +5,10 @@ export default {
   name: "Page7",
   props: {},
   data() {
-    return {};
+    return {
+      scheme:"",
+      innovation:"",
+    };
   },
   methods: {},
   components: { PageTitle },
@@ -26,9 +29,9 @@ export default {
     </div>
     <div class="respondence">
       <p>你的方案：</p>
-      <el-input type="textarea" :rows="6" />
+      <el-input type="textarea" :rows="6" v-model="scheme" />
       <p>创新点：</p>
-      <el-input type="textarea" :rows="6" />
+      <el-input type="textarea" :rows="6" v-model="innovation" />
     </div>
   </div>
 </template>

@@ -1,10 +1,68 @@
 <script>
 import PageTitle from "../components/PageTitle.vue";
+import { usePPTStore } from "../stores/ppt";
+import { useProcessStore } from "../stores/process";
 export default {
   name: "Page2",
   props: {},
   data() {
-    return {};
+    return {
+      processStore: useProcessStore(),
+      pptStore: usePPTStore(),
+      options: [
+        {
+          label: "①出塞诗其一·王昌龄",
+          value: "①出塞诗其一·王昌龄",
+        },
+
+        {
+          label: "②过故人庄·孟浩然",
+          value: "②过故人庄·孟浩然",
+        },
+        {
+          label: "③月夜忆舍弟·杜甫",
+          value: "③月夜忆舍弟·杜甫",
+        },
+        {
+          label: "④凉州词其一·杜牧",
+          value: "④凉州词其一·杜牧",
+        },
+        {
+          label: "⑤客至·杜甫",
+          value: "⑤客至·杜甫",
+        },
+        {
+          label: "⑥望月怀远·张九龄",
+          value: "⑥望月怀远·张九龄",
+        },
+        {
+          label: "⑦赠汪伦·李白",
+          value: "⑦赠汪伦·李白",
+        },
+        {
+          label: "⑧静夜思·李白",
+          value: "⑧静夜思·李白",
+        },
+        {
+          label: "⑨闻官军收河南河北·杜甫",
+          value: "⑨闻官军收河南河北·杜甫",
+        },
+        {
+          label: "⑩泊秦淮·杜牧",
+          value: "⑩泊秦淮·杜牧",
+        },
+        {
+          label: "⑪十五夜望月寄杜郎中·王建",
+          value: "⑪十五夜望月寄杜郎中·王建",
+        },
+        {
+          label: "⑫喜见外弟又言别·李益",
+          value: "⑫喜见外弟又言别·李益",
+        },
+      ],
+      currentSelect: "",
+      reason: "",
+    };
   },
   methods: {},
   components: { PageTitle },
@@ -22,9 +80,21 @@ export default {
     </div>
     <div class="respondence">
       <p>淘汰的诗歌：</p>
-      <el-select style="width:100%"></el-select>
+      <el-select
+        style="width: 100%"
+        v-model="currentSelect"
+        placeholder="请选择要淘汰的诗歌"
+      >
+        <el-option
+          @blur="checkBlur"
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.label"
+        ></el-option>
+      </el-select>
       <p>淘汰的理由</p>
-      <el-input type="textarea"></el-input>
+      <el-input type="textarea" :rows="6" v-model="reason"></el-input>
     </div>
   </div>
 </template>
@@ -32,7 +102,7 @@ export default {
 @import "../assets/questionStem.scss";
 .respondence {
   margin-top: 30px;
-  p{
+  p {
     margin: 10px 0;
   }
 }
