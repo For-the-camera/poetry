@@ -84,6 +84,7 @@ export default {
         v-model="answer"
         @focus="$checkFocus"
         @blur="postInputData"
+        :show-word-limit="true"
       ></el-input>
     </div>
     <div class="stem" style="margin-top: 30px">

@@ -66,6 +66,7 @@ export default {
         v-model="idea"
         @focus="$checkFocus"
         @blur="postInputData"
+        :show-word-limit="true"
       />
     </div>
   </div>

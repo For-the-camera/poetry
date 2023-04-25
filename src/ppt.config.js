@@ -93,7 +93,7 @@ export default [
     index: 10,
     title: "9",
     single: true,
-    page: import("../src/ppt/Page10.vue")
+    page: import("../src/ppt/Page9.vue")
   }
 
 ];

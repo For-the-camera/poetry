@@ -65,6 +65,7 @@ export default {
           v-model="scene"
           @focus="$checkFocus"
           @blur="postInputData(0)"
+          :show-word-limit="true"
         />
       </div>
       <div class="item">
@@ -74,6 +75,7 @@ export default {
           v-model="poetry[0]"
           @focus="$checkFocus"
           @blur="postInputData(1)"
+          :show-word-limit="true"
         />
         ,
         <el-input
@@ -81,6 +83,7 @@ export default {
           v-model="poetry[1]"
           @focus="$checkFocus"
           @blur="postInputData(2)"
+          :show-word-limit="true"
         />
       </div>
     </div>

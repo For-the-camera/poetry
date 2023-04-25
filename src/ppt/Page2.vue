@@ -134,7 +134,7 @@ export default {
         :rows="6"
         v-model="reason"
         @blur="pushInputData"
-        show-word-limit
+        :show-word-limit="true"
         placeholder="请输入你的淘汰理由"
       ></el-input>
     </div>

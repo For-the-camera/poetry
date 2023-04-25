@@ -65,6 +65,7 @@ export default {
         v-model="scheme"
         @focus="$checkFocus"
         @blur="postInputData(0)"
+        :show-word-limit="true"
       />
       <p>创新点：</p>
       <el-input
@@ -73,6 +74,7 @@ export default {
         v-model="innovation"
         @focus="$checkFocus"
         @blur="postInputData(1)"
+        :show-word-limit="true"
       />
     </div>
   </div>

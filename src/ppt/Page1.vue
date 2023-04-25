@@ -191,8 +191,7 @@ export default {
       <el-input
         type="textarea"
         :rows="1"
-        :min-length="0"
-        :max-length="100"
+        :show-word-limit="true"
         placeholder="请输入单元标题"
         v-model="content2"
         @focus="$checkFocus"
