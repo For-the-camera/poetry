@@ -1,12 +1,13 @@
 <script>
 import PageTitle from "../components/PageTitle.vue";
-import { drag, drop } from "../tools/drag";
+import { useVmStore } from "../stores/vm";
 import dragula from "dragula";
+
 export default {
   name: "Page1",
   props: {},
   data() {
-    return { content1: "", content2: "==" };
+    return { content1: "", content2: "==", valueList: [] };
   },
   methods: {},
   components: { PageTitle },
@@ -15,11 +16,13 @@ export default {
     const drag_left_el = this.$refs.left_panle;
     const drag_right_el = this.$refs.right_panle;
     const a = this.$refs.darg_answer_item;
-    console.log(drag_left_el.childNodes);
+    let temp;
+
     dragula([...drag_left_el.childNodes, drag_right_el], {
-      copy: true,
       mirrorContainer: document.body,
+      ignoreInputTextSelection: false,
       moves: function (el, container, handle) {
+        handle = handle.cloneNode(true);
         return handle.classList.contains("darg_select_item");
       },
       accepts: function (el, target, source, sibling) {
@@ -29,9 +32,37 @@ export default {
         if (target.childNodes.length > 0) {
           return false;
         }
+
+        if (useVmStore().valueList.includes(el.getAttribute("value"))) {
+          return false;
+        }
+
         return true;
       },
-    });
+    })
+      .on("dragend", function (el) {
+        if (el.parentNode.className != "darg_select_panle") {
+          if (temp == el.parentNode) {
+            useVmStore().valueList = useVmStore().valueList.filter((item) => {
+              if (item == el.getAttribute("value")) {
+                return false;
+              }
+              return true;
+            });
+            el.parentNode.removeChild(el);
+          }
+          temp = el.parentNode;
+        }
+      })
+      .on("drop", (el, target, source) => {
+        useVmStore().valueList.push(el.getAttribute("value"));
+
+        if (el.getAttribute("data-copyable") === "true") {
+          const clonedEl = el.cloneNode(true);
+          clonedEl.classList.remove("gu-transit");
+          source.appendChild(clonedEl);
+        }
+      });
   },
 };
 </script>
@@ -57,18 +88,42 @@ export default {
           </div>
         </div>
         <div class="darg_select_panle" ref="right_panle">
-          <div class="darg_select_item">1</div>
-          <div class="darg_select_item">2</div>
-          <div class="darg_select_item">3</div>
-          <div class="darg_select_item">4</div>
-          <div class="darg_select_item">5</div>
-          <div class="darg_select_item">6</div>
-          <div class="darg_select_item">7</div>
-          <div class="darg_select_item">8</div>
-          <div class="darg_select_item">9</div>
-          <div class="darg_select_item">10</div>
-          <div class="darg_select_item">11</div>
-          <div class="darg_select_item">12</div>
+          <div class="darg_select_item Index1" data-copyable="true" value="1">
+            1
+          </div>
+          <div class="darg_select_item Index2" data-copyable="true" value="2">
+            2
+          </div>
+          <div class="darg_select_item Index3" data-copyable="true" value="3">
+            3
+          </div>
+          <div class="darg_select_item Index4" data-copyable="true" value="4">
+            4
+          </div>
+          <div class="darg_select_item Index5" data-copyable="true" value="5">
+            5
+          </div>
+          <div class="darg_select_item Index6" data-copyable="true" value="6">
+            6
+          </div>
+          <div class="darg_select_item Index7" data-copyable="true" value="7">
+            7
+          </div>
+          <div class="darg_select_item Index8" data-copyable="true" value="8">
+            8
+          </div>
+          <div class="darg_select_item Index9" data-copyable="true" value="9">
+            9
+          </div>
+          <div class="darg_select_item Index10" data-copyable="true" value="10">
+            10
+          </div>
+          <div class="darg_select_item Index11" data-copyable="true" value="11">
+            11
+          </div>
+          <div class="darg_select_item Index12" data-copyable="true" value="12">
+            12
+          </div>
         </div>
       </div>
       <p style="margin-top: 7px">组合标准：</p>
@@ -92,7 +147,7 @@ export default {
 </template>
 <style lang="scss" scoped>
 @import "../assets/questionStem";
-@import "../../node_modules/dragula/dist/dragula";
+@import "../assets/dragula";
 $cell_size: 40px;
 .page1 {
   .darg_no {
@@ -119,10 +174,50 @@ $cell_size: 40px;
       width: 70%;
       height: 150px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 1fr 1fr 1fr;
+      // grid-template-columns: repeat(4, 1fr);
+      // grid-template-rows: 1fr 1fr 1fr;
+      grid-template-areas:
+        "Index1 Index2 Index3 Index4"
+        "Index5 Index6 Index7 Index8"
+        "Index9 Index10 Index11 Index12";
       .darg_select_item {
         border: 1px solid black;
+      }
+      .Index1 {
+        grid-area: Index1;
+      }
+      .Index2 {
+        grid-area: Index2;
+      }
+      .Index3 {
+        grid-area: Index3;
+      }
+      .Index4 {
+        grid-area: Index4;
+      }
+      .Index5 {
+        grid-area: Index5;
+      }
+      .Index6 {
+        grid-area: Index6;
+      }
+      .Index7 {
+        grid-area: Index7;
+      }
+      .Index8 {
+        grid-area: Index8;
+      }
+      .Index9 {
+        grid-area: Index9;
+      }
+      .Index10 {
+        grid-area: Index10;
+      }
+      .Index11 {
+        grid-area: Index11;
+      }
+      .Index12 {
+        grid-area: Index12;
       }
     }
     .darg_select_item {
