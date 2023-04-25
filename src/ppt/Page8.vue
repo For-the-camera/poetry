@@ -50,7 +50,7 @@ export default {
         type="textarea"
         :rows="6"
         v-model="idea"
-        @focus="$checFocus"
+        @focus="$checkFocus"
         @blur="postInputData"
       />
     </div>

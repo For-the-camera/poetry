@@ -68,9 +68,13 @@ export default {
     recordData() {
       const index = this.store.nowPage.index - 1;
       if (index !== 0) {
-        const lastResult = JSON.parse(
-          JSON.stringify(this.processStore[`page${index}`].answer.lastResult)
-        );
+        let lastResult;
+        if (this.processStore[`page${index}`].answer.lastResult) {
+          lastResult = JSON.parse(
+            JSON.stringify(this.processStore[`page${index}`].answer.lastResult)
+          );
+        }
+
         if (
           (lastResult instanceof Array && lastResult.length !== 0) ||
           (typeof lastResult === "string" && lastResult !== "")

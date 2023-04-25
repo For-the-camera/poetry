@@ -48,7 +48,7 @@ export default {
         type="textarea"
         :rows="6"
         v-model="scheme"
-        @focus="checkFocus"
+        @focus="$checkFocus"
         @blur="postInputData(0)"
       />
       <p>创新点：</p>
@@ -56,7 +56,7 @@ export default {
         type="textarea"
         :rows="6"
         v-model="innovation"
-        @focus="checkFocus"
+        @focus="$checkFocus"
         @blur="postInputData(1)"
       />
     </div>
