@@ -1,6 +1,7 @@
 <script>
 import PageTitle from "../components/PageTitle.vue";
 import { drag, drop } from "../tools/drag";
+import dragula from "dragula";
 export default {
   name: "Page1",
   props: {},
@@ -13,29 +14,22 @@ export default {
     const drag_panle_el = this.$refs.drag_panle;
     const drag_left_el = this.$refs.left_panle;
     const drag_right_el = this.$refs.right_panle;
-    drag(drag_right_el, {
-      dragClass: ".darg_select_item",
-    });
-    drop(drag_left_el, {
-      dropClass: ".darg_answer_item",
+    const a = this.$refs.darg_answer_item;
+    console.log(drag_left_el.childNodes);
+    dragula([...drag_left_el.childNodes, drag_right_el], {
       copy: true,
-      condition: (event, options) => {
-        const parentClassName = event.dataTransfer.getData("parent");
-        console.log(parentClassName);
-        return (
-          "." + event.target.className == options.dropClass &&
-          parentClassName != ""
-        );
+      mirrorContainer: document.body,
+      moves: function (el, container, handle) {
+        return handle.classList.contains("darg_select_item");
       },
-    });
-    drag(drag_left_el, {
-      dragClass: ".darg_select_item",
-    });
-    drop(drag_panle_el, {
-      dropClass: "div",
-      copy: false,
-      condition: (event, options) => {
-        return "." + event.target.className != ".darg_select_item";
+      accepts: function (el, target, source, sibling) {
+        if (target.className == source.className) {
+          return false;
+        }
+        if (target.childNodes.length > 0) {
+          return false;
+        }
+        return true;
       },
     });
   },
@@ -56,7 +50,7 @@ export default {
       <div class="darg_no" style="margin-top: 27px" ref="drag_panle">
         <div class="darg_answer">
           <div class="darg_answer_list" ref="left_panle">
-            <div class="darg_answer_item"></div>
+            <div class="darg_answer_item" ref="darg_answer_item"></div>
             <div class="darg_answer_item"></div>
             <div class="darg_answer_item"></div>
             <div class="darg_answer_item"></div>
@@ -98,6 +92,7 @@ export default {
 </template>
 <style lang="scss" scoped>
 @import "../assets/questionStem";
+@import "../../node_modules/dragula/dist/dragula";
 $cell_size: 40px;
 .page1 {
   .darg_no {
@@ -133,7 +128,6 @@ $cell_size: 40px;
     .darg_select_item {
       width: $cell_size;
       height: $cell_size;
-
       display: flex;
       justify-content: center;
       align-items: center;

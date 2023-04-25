@@ -45,3 +45,29 @@ export function drop(
     });
   });
 }
+
+// drag(drag_right_el, {
+//   dragClass: ".darg_select_item",
+// });
+// drop(drag_left_el, {
+//   dropClass: ".darg_answer_item",
+//   copy: true,
+//   condition: (event, options) => {
+//     const parentClassName = event.dataTransfer.getData("parent");
+//     console.log(parentClassName);
+//     return (
+//       "." + event.target.className == options.dropClass &&
+//       parentClassName.trim() != ""
+//     );
+//   },
+// });
+// drag(drag_left_el, {
+//   dragClass: ".darg_select_item",
+// });
+// drop(drag_panle_el, {
+//   dropClass: "div",
+//   copy: false,
+//   condition: (event, options) => {
+//     return "." + event.target.className != ".darg_select_item";
+//   },
+// });
