@@ -15,7 +15,7 @@ export default {
 </script>
 <template>
   <div class="page-container">
-    <PageTitle></PageTitle>
+    <PageTitle>2/9</PageTitle>
   </div>
 </template>
 <style scoped></style>

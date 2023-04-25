@@ -12,7 +12,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/theme";
 .page-title {
-  background-color: $pageTitleColor;
+  background-image: linear-gradient(to right, #b0d5e8, #a2cde4, #94c5df, #85bedb, #76b6d7);
   padding: 12px;
 }
 </style>
