@@ -62,7 +62,7 @@ export default {
 <template>
   <div class="container">
     <NavBar ref="navBarRef" :config="pptConfig"></NavBar>
-    <div class="ppt-content" v-if="!store.nowPage.single">
+    <div class="ppt-content" v-show="!store.nowPage.single">
       <div class="left">
         <keep-alive>
           <component v-bind:is="pptRender[0]"></component>
@@ -74,7 +74,7 @@ export default {
         </keep-alive>
       </div>
     </div>
-    <div class="single-page" v-else>
+    <div class="single-page" v-show="store.nowPage.single">
       <keep-alive>
         <component v-bind:is="pptRender[2]"></component>
       </keep-alive>
