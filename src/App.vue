@@ -12,22 +12,25 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener('message',(e) => {
-      console.log(e);
-    })
+    // window.addEventListener('message',(e) => {
+    // })
     this.$watch(
       () => this.pptStore.postData,
       (val) => {
-       if (val) {
-        window.postMessage({
-          data: this.processStore.$state,
-          checkedAnswer: this.pptStore.checkedAnswer,
-          postTime: Date.now(),
-          cst: new Date(),
-        });
-        this.pptStore.postData = false;
-       }
-      },
+        if (val) {
+          parent.postMessage(
+            {
+              data: this.processStore.$state,
+              isAnswered: this.pptStore.checkedAnswer,
+              postTime: Date.now(),
+              cst: new Date(),
+            },
+            "*"
+          );
+          console.log("post");
+          this.pptStore.postData = false;
+        }
+      }
     );
   },
 };

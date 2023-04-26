@@ -21,7 +21,7 @@ export default {
       <span
         style="
           text-decoration: underline;
-          font-weight: 400;
+          font-weight: 600;
           text-underline-position: from-font;
         "
         >为八年级学生编选一个古代诗歌学习单元</span

@@ -28,7 +28,8 @@ export default {
           next.state = "process";
           this.$set(this.renderList, index + 1, next);
           this.store.nowPage = this.renderList[index + 1];
-
+          this.store.checkedAnswer = true;
+          this.$postData();
           return;
         }
         const index = this.store.nowPage.index - 1;
@@ -65,6 +66,9 @@ export default {
         this.store.nowPage = this.renderList[index - 1];
         if (index + 1 !== 10) {
           this.store.nowPage.enterMoment = Date.now();
+        } else {
+          this.store.checkedAnswer = false;
+          this.$postData();
         }
       }
     },
